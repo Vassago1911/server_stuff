@@ -7,7 +7,7 @@ import json
 import platform
 import socket
 import os
-import sudo_log
+import os_lib.sudo_log as sudo_log
 
 def get_server_identity():
     """Get information about the server"""
@@ -29,12 +29,12 @@ def load_json_file(fname):
 def get_local_mail_creds():
     import os
     script_dir = os.path.abspath( os.path.dirname( __file__ ) )+"/"
-    return load_json_file(script_dir+'mail_creds.json')
+    return load_json_file(script_dir+'local_files/mail_creds.json')
 
 def get_receivers():
     import os
     script_dir = os.path.abspath( os.path.dirname( __file__ ) )+"/"
-    return load_json_file(script_dir+'receivers.json')['receivers']
+    return load_json_file(script_dir+'local_files/receivers.json')['receivers']
 
 def format_server_info(server_info):
     """Format server information for email"""

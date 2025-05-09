@@ -5,7 +5,7 @@ def generate_iptables_rules():
         return res
     import os
     script_dir = os.path.abspath( os.path.dirname( __file__ ) )+"/"
-    with open(script_dir+'block.ips','r') as fi:
+    with open(script_dir+'local_files/block.ips','r') as fi:
         ip_list = fi.readlines()
     ip_list = list(map(lambda z: str(z).strip('\n'),ip_list))
     p0 = """*filter
