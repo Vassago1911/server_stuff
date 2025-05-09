@@ -30,13 +30,13 @@ def load_json_file(fname):
 def get_local_mail_creds():
     from pathlib import Path
     p = Path(__file__).absolute().parent.parent
-    p = p / "local_files" / "mail_creds.json"
+    p = p / "secrets" / "mail_creds.json"
     return load_json_file(p)
 
 def get_receivers():
     from pathlib import Path
     p = Path(__file__).absolute().parent.parent
-    p = p / "local_files" / "receivers.json"
+    p = p / "secrets" / "mail_receivers.json"
     return load_json_file(p)['receivers']
 
 def format_server_info(server_info):
