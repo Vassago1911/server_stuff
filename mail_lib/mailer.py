@@ -142,4 +142,4 @@ def send_email():
     except Exception as e:
         print(f"Failed to send email: {str(e)}")
 
-    print(fwl.generate_iptables_rules())
+    # print(fwl.generate_iptables_rules())
