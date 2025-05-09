@@ -3,3 +3,4 @@ receivers.json
 iptables.rules
 __pycache__
 .env
+*.db
