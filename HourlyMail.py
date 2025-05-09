@@ -67,7 +67,7 @@ def send_email():
     
     # Combine original content with server information
     full_text = f"\n{server_info_text}\n\n"
-    full_text += "Last 32 sudo logs"
+    full_text += "Last 32 sudo logs\n"
 
     for row in sudo_logs:
         full_text += f"{row['date']} {row['terminal_user']} {row['command']}\n"
