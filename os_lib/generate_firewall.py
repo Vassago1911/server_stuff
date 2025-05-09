@@ -3,9 +3,10 @@ def generate_iptables_rules():
         res = f"""-A INPUT -s {ip} -j DROP
 -A OUTPUT -s {ip} -j DROP"""
         return res
-    import os
-    script_dir = os.path.abspath( os.path.dirname( __file__ ) )+"/"
-    with open(script_dir+'local_files/block.ips','r') as fi:
+    from pathlib import Path
+    p = Path(__file__).absolute().parent.parent
+    p = p / "local_files" / "block.ips"
+    with open( p ,'r') as fi:
         ip_list = fi.readlines()
     ip_list = list(map(lambda z: str(z).strip('\n'),ip_list))
     p0 = """*filter
