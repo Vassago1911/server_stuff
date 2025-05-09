@@ -27,14 +27,14 @@ def load_json_file(fname):
     return json.loads(s)
 
 def get_local_mail_creds():
-    prefix = '/home/v/scripts/'
-    # prefix = ''
-    return load_json_file(prefix+'mail_creds.json')
+    import os
+    script_dir = os.path.abspath( os.path.dirname( __file__ ) )+"/"
+    return load_json_file(script_dir+'mail_creds.json')
 
 def get_receivers():
-    prefix = '/home/v/scripts/'
-    # prefix = ''
-    return load_json_file(prefix+'receivers.json')['receivers']
+    import os
+    script_dir = os.path.abspath( os.path.dirname( __file__ ) )+"/"
+    return load_json_file(script_dir+'receivers.json')['receivers']
 
 def format_server_info(server_info):
     """Format server information for email"""
@@ -141,4 +141,5 @@ def send_email():
 
 # Example usage
 if __name__ == "__main__":
+    
     send_email()
