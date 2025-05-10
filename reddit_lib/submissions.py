@@ -43,8 +43,9 @@ def get_new_submissions(subreddit):
         return tmp
     try:
         tmp = get_new_in_subreddit(subreddit,128)
-    except:
+    except Exception as e:
         tmp = []
+        print('Exception thrown', e )
         print('submission request failed for ', subreddit)
     tmp = pd.DataFrame(tmp,columns=['scrape_date',
                                     'created_utc',
