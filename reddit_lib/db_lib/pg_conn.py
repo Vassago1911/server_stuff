@@ -1,6 +1,6 @@
 def get_connection_creds():
     from pathlib import Path
-    p = Path(__file__).absolute().parent.parent
+    p = Path(__file__).absolute().parent.parent.parent
     p = p / "dockers" / "databases" / ".env"
     with open(p,'r') as fi:
         s = fi.readlines()

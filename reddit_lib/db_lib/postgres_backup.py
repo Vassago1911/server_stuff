@@ -1,12 +1,17 @@
 import pandas as pd
-import db_lib.pg_conn as pg_conn
+import pg_conn
 eng = pg_conn.get_postgres_connection()
 
 from time import time as _t
 time = lambda : int(_t())
 
+from pathlib import Path
+p = Path(__file__).absolute().parent.parent.parent / "secrets" / "backup_path.txt"
+with open(p,'r') as fi:
+    backup_db_path = ''.join(fi.readlines())
+
 import sqlite3
-con = sqlite3.connect(f'/media/v/spinDATA/reddit_postgres_backup/reddit_{time()}.db')
+con = sqlite3.connect(backup_db_path + f'reddit_{time()}.db')
 
 all_tables = list(pd.read_sql("select table_name from information_schema.tables where table_schema = 'public'",eng).table_name.unique())
 all_tables = sorted(all_tables)

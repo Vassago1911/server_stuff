@@ -1,9 +1,10 @@
 import datetime
 today = lambda : str(datetime.datetime.now())[:19]
+log_today = lambda : str(datetime.datetime.now())[5:16]
 
 import json
 import pandas as pd
-from reddit_lib.connection import get_reddit_client
+from connection import get_reddit_client
 
 def get_new_submissions(subreddit):
     def url_to_subreddit(url='python',reddit_client=get_reddit_client()):
@@ -59,17 +60,17 @@ def get_new_submissions(subreddit):
 
 def get_relevant_subreddits(connection):
     try:
-        return tuple(['all'] + list(pd.read_sql('select * from subreddits where chosen = 1 and subscribers > 100',connection).subreddit_url.unique()))
+        return tuple(['all'] + sorted(list(pd.read_sql('select * from subreddits where chosen = 1 and subscribers > 100',connection).subreddit_url.unique())))
     except:
         return tuple(['all','de','worldnews','kurrent','mathe','onionlovers','palestine'])
 
 def load_new_submissions_to_connection(connection):
     subreddit_list = get_relevant_subreddits(connection)
-    for subreddit in subreddit_list:
-        print(f"{today()}:  ", 'getting submissions for subreddit: ', subreddit)
+    for i,subreddit in enumerate(subreddit_list):
+        print("Round",f"{i:02d}",f"- {log_today()} -", 'getting submissions for subreddit: ', subreddit)
         tmp = get_new_submissions(subreddit)
         if len(tmp) > 0:
             tmp.to_sql('submissions',connection,if_exists='append',index=False)
-            print(f"{today()}:  ",'saved',len(tmp),f"new submissions in {subreddit}")
+            print("Round",f"{i:02d}",f"- {log_today()} -",'saved',len(tmp),f"new submissions in {subreddit}")
         else:
-            print(f"{today()}:  ",f"no new submissions in {subreddit}")
+            print("Round",f"{i:02d}",f"- {log_today()} -",f"no new submissions in {subreddit}")
