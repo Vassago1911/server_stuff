@@ -12,5 +12,5 @@ def get_connection_creds():
 def get_postgres_connection():
     creds = get_connection_creds()
     from sqlalchemy import create_engine
-    engine = create_engine(f'postgresql+psycopg2://{creds['POSTGRES_USER']}:{creds['POSTGRES_PASSWORD']}@localhost:5433/{creds['POSTGRES_DB']}')
+    engine = create_engine(f'postgresql+psycopg2://{creds['POSTGRES_USER']}:{creds['POSTGRES_PASSWORD']}@localhost:5432/{creds['POSTGRES_DB']}')
     return engine
