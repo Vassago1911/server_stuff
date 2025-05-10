@@ -9,12 +9,20 @@ from connection import get_reddit_client
 from random import shuffle
 
 def get_uncommented_submissions(connection):
-    submission_ids = list(pd.read_sql("""
-                    select distinct s.submission_id from submissions s 
-                     where submission_id not in ( select distinct submission_id from "comments" c )
-                       and s.submission_language = 'de'
-                       and s.submission_comment_count >= 32
-                       """,connection).submission_id.unique())
+    try:
+        submission_ids = list(pd.read_sql("""
+                        select distinct s.submission_id from submissions s 
+                         where submission_id not in ( select distinct submission_id from "comments" c )
+                           and s.submission_language = 'de'
+                           and s.submission_comment_count >= 32
+                           """,connection).submission_id.unique())
+    except Exception as e:
+        print('Exception',e)
+        submission_ids = list(pd.read_sql("""
+                        select distinct s.submission_id from submissions s 
+                         where s.submission_language = 'de'
+                           and s.submission_comment_count >= 32
+                           """,connection).submission_id.unique()) 
     blocked = ["1dbo2q2","1dq173n","189o5u4","1dgh2yv","1dspun8"]
     submission_ids = [ s for s in submission_ids if s not in blocked ]
     print("                 ",len(submission_ids),"remaining")
