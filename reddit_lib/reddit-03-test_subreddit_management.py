@@ -3,9 +3,9 @@ from subreddits import add_subreddit, choose_subreddit, unchoose_subreddit
 import db_lib.pg_conn as pg_conn
 eng = pg_conn.get_postgres_connection()
 
-adders = ['ltb_iel']
+adders = ['ltb_iel','die_linke','diegruenen']
 
-choosers = ['ltb_iel']
+choosers = ['ltb_iel','die_linke']
 
 unchoosers = [ 'bundesliga' ]
 
