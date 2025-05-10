@@ -14,7 +14,7 @@ with open(p,'r') as fi:
 import os
 reddit_dbs = os.listdir(backup_db_path)
 reddit_dbs = list(filter(lambda z: ('reddit_' in z) and ('.db' in z),reddit_dbs ))
-reddit_db = backup_db_path + max(reddit_dbs)
+reddit_db = backup_db_path + '/' + max(reddit_dbs)
 print('using reddit db at', reddit_db)
 
 import sqlite3
