@@ -9,7 +9,7 @@ time = lambda : int(_t())
 from pathlib import Path
 p = Path(__file__).absolute().parent.parent.parent / "secrets" / "backup_path.txt"
 with open(p,'r') as fi:
-    backup_db_path = ''.join(fi.readlines())
+    backup_db_path = ( ''.join(fi.readlines()) ).strip('\n').strip(' ')
 
 import os
 reddit_dbs = os.listdir(backup_db_path)
