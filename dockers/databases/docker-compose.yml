@@ -14,21 +14,6 @@ services:
     networks:
       - local-network
 
-  clickhouse:
-    image: yandex/clickhouse-server:latest
-    container_name: clickhouse
-    ports:
-      - "127.0.0.1:8123:8123"  # HTTP port
-      - "127.0.0.1:9000:9000"  # Native port
-    volumes:
-      - clickhouse_data:/var/lib/clickhouse
-    environment:
-      - CLICKHOUSE_USER=${CLICKHOUSE_USER}
-      - CLICKHOUSE_PASSWORD=${CLICKHOUSE_PASSWORD}
-    restart: always
-    networks:
-      - local-network
-
 networks:
   local-network:
     driver: bridge
