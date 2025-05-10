@@ -1,6 +1,6 @@
 import pandas as pd
 import pg_conn
-eng = pg_conn.get_postgres_connection()
+eng = pg_conn.get_postgres_connection(port=5433)
 pg_con = eng.connect().execution_options(stream_results=True)
 
 from time import time as _t

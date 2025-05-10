@@ -9,8 +9,8 @@ def get_connection_creds():
     s = dict(s)
     return s
 
-def get_postgres_connection():
+def get_postgres_connection(port=5432):
     creds = get_connection_creds()
     from sqlalchemy import create_engine
-    engine = create_engine(f'postgresql+psycopg2://{creds['POSTGRES_USER']}:{creds['POSTGRES_PASSWORD']}@localhost:5432/{creds['POSTGRES_DB']}')
+    engine = create_engine(f'postgresql+psycopg2://{creds['POSTGRES_USER']}:{creds['POSTGRES_PASSWORD']}@localhost:{port}/{creds['POSTGRES_DB']}')
     return engine
