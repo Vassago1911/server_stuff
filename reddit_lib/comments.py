@@ -58,14 +58,15 @@ def load_comments_to_connection(connection):
             break
         for i,submission_id in enumerate(submission_ids):
             print("Round", f"{i:02d}", f"-- {log_today()} - ", 'getting comments for submission: ', submission_id)
-            try:
-                known = list(pd.read_sql('select distinct submission_id from "comments" c',connection).submission_id.unique())
-            except Exception as e:
-                print('Exception',e)
-                known = []
-            if submission_id in known:
-                print('      ',submission_id,'known already, skipping')
-                continue
+            # """put back in to have more than one worker running without duplicate entries, for one worker it's useless"""
+            # try:
+            #     known = list(pd.read_sql('select distinct submission_id from "comments" c',connection).submission_id.unique())
+            # except Exception as e:
+            #     print('Exception',e)
+            #     known = []
+            # if submission_id in known:
+            #     print('      ',submission_id,'known already, skipping')
+            #     continue
             try:
                 tmp = get_submission_comments(submission_id)
             except:

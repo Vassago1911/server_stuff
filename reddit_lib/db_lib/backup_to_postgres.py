@@ -25,7 +25,7 @@ all_tables = sorted(list(pd.read_sql("select table_name from information_schema.
 for table in all_tables:
     print('starting', table)
     start_t = time()
-    df = pd.read_sql(f"select * from {table}",con):
+    df = pd.read_sql(f"select * from {table}",con)
     df.to_sql(table,eng,if_exists='replace',index=False)
     end_t = time()
     print('took', end_t - start_t, 'seconds')
