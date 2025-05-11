@@ -1,5 +1,5 @@
 import db_lib.pg_conn as pg_conn
-eng = pg_conn.get_postgres_connection()
+eng = pg_conn.get_postgres_connection(port=5433)
 
 import pandas as pd
 from time import time 
@@ -63,11 +63,11 @@ def submission_compressed():
 def timed_df_save(df,table_name):
     df.to_sql(table_name,eng,if_exists='replace',index=False)
 
-subreddits = subreddit_compressed()
-timed_df_save(subreddits,'subreddits')
-
 comments = comments_compressed()
 timed_df_save(comments,'comments')
 
 submissions = submission_compressed()
 timed_df_save(submissions,'submissions')
+
+subreddits = subreddit_compressed()
+timed_df_save(subreddits,'subreddits')
