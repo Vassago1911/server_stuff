@@ -4,7 +4,7 @@ def generate_iptables_rules():
 -A OUTPUT -s {ip} -j DROP"""
         return res
     from pathlib import Path
-    p = Path(__file__).absolute().parent.parent
+    p = Path(__file__).absolute().parent.parent.parent
     p = p / "local_files" / "block.ips"
     with open( p ,'r') as fi:
         ip_list = fi.readlines()

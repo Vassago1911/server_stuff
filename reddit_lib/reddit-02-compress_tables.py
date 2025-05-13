@@ -1,5 +1,5 @@
 import db_lib.pg_conn as pg_conn
-eng = pg_conn.get_postgres_connection(port=5433)
+eng = pg_conn.get_postgres_connection(port=5432)
 
 import pandas as pd
 from time import time 
@@ -17,6 +17,7 @@ def timer_func(func):
   
 @timer_func
 def subreddit_compressed():
+    print('reading subreddits')
     subreddit_compression_sql = """select lower(subreddit_url) subreddit_url
                  , max(subscribers) subscribers
                  , max(chosen) chosen
@@ -28,6 +29,7 @@ def subreddit_compressed():
 
 @timer_func
 def comments_compressed():
+    print('reading comments')
     comment_compression_sql = """select comment_id
                  , submission_id
                  , min(scrape_date) scrape_date
@@ -43,6 +45,7 @@ def comments_compressed():
 
 @timer_func
 def submission_compressed():         
+    print('reading submissions')
     submission_compression_sql = """select min(scrape_date) scrape_date
                  , min(created_utc) created_utc
                  , subreddit_url 
@@ -63,6 +66,10 @@ def submission_compressed():
 def timed_df_save(df,table_name):
     df.to_sql(table_name,eng,if_exists='replace',index=False)
 
+import datetime
+log_today = lambda : str(datetime.datetime.now())[5:16]
+print(log_today(),'starting compression of comment data')
+
 comments = comments_compressed()
 timed_df_save(comments,'comments')
 
@@ -71,3 +78,5 @@ timed_df_save(submissions,'submissions')
 
 subreddits = subreddit_compressed()
 timed_df_save(subreddits,'subreddits')
+
+print(log_today(),'compression of comment data done')

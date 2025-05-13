@@ -8,14 +8,24 @@ from connection import get_reddit_client
 
 from random import shuffle
 
+unscraped_submissions = """
+select s.submission_id from 
+( select s.submission_id
+       , s.submission_comment_count
+       , coalesce( c_cnt.comments , 0 ) scraped_comments
+       , s.submission_comment_count - coalesce( c_cnt.comments , 0 ) unscraped_comments
+    from submissions s 
+    left join ( select submission_id, count(distinct comment_id) comments from comments group by submission_id ) c_cnt
+      on s.submission_id = c_cnt.submission_id 
+   where created_utc > 1700000000
+     and s.submission_language = 'de'
+     and ( s.submission_comment_count - coalesce( c_cnt.comments , 0 ) ) > 16
+   order by unscraped_comments desc ) s """
+
+
 def get_uncommented_submissions(connection):
     try:
-        submission_ids = list(pd.read_sql("""
-                        select distinct s.submission_id from submissions s 
-                         where submission_id not in ( select distinct submission_id from "comments" c )
-                           and s.submission_language = 'de'
-                           and s.submission_comment_count >= 32
-                           """,connection).submission_id.unique())
+        submission_ids = list(pd.read_sql(unscraped_submissions,connection).submission_id.unique())
     except Exception as e:
         print('Exception',e)
         submission_ids = list(pd.read_sql("""

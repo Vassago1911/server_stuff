@@ -7,7 +7,7 @@ adders = ['ltb_iel','die_linke','diegruenen']
 
 choosers = ['ltb_iel','die_linke']
 
-unchoosers = [ 'bundesliga' ]
+unchoosers = [ 'ukrainemt' ]
 
 for subreddit in sorted(adders):
     add_subreddit(subreddit,connection=eng,chosen=1)

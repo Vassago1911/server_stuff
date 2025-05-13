@@ -1,10 +1,14 @@
 import pandas as pd
 import pg_conn
-eng = pg_conn.get_postgres_connection(port=5433)
+eng = pg_conn.get_postgres_connection(port=5432)
 pg_con = eng.connect().execution_options(stream_results=True)
 
 from time import time as _t
 time = lambda : int(_t())
+
+import datetime
+log_today = lambda : str(datetime.datetime.now())[5:16]
+print(log_today(),'starting local backup')
 
 from pathlib import Path
 p = Path(__file__).absolute().parent.parent.parent / "secrets" / "backup_path.txt"
@@ -26,3 +30,4 @@ for table in all_tables:
     df.to_sql(table,con,if_exists='replace',index=False)
     end_t = time()
     print('took', end_t - start_t, 'seconds')
+print(log_today(),'local backup done')
